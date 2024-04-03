@@ -15,7 +15,7 @@ jobs:
       - run: echo ${{ vars.MY_ENV1 }}
       - name: print secrets
         run: |
-            echo $DEV_ENV_FILE &gt;&gt; src/.env
+            echo $DEV_ENV_FILE >> src/.env
             cat src/.env
         shell: bash
         env:
