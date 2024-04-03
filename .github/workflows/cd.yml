@@ -11,4 +11,5 @@ jobs:
     environment: production
     steps:
       - run: echo ${{ vars.SECRET1 }}
+      - run: echo ${{ secrets.SECRET1 }}
       - run: echo ${{ vars.MY_ENV1 }}
