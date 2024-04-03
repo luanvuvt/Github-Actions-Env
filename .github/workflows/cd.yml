@@ -10,6 +10,5 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
     steps:
-      - name: deploy
       - run: echo ${{ vars.SECRET1 }}
       - run: echo ${{ vars.MY_ENV1 }}
