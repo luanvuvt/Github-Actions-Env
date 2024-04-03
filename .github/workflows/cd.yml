@@ -13,3 +13,15 @@ jobs:
       - run: echo ${{ vars.SECRET1 }}
       - run: echo ${{ secrets.SECRET1 }}
       - run: echo ${{ vars.MY_ENV1 }}
+      - name: print secrets
+        run: |
+            echo $DEV_ENV_FILE &gt;&gt; src/.env
+            cat src/.env
+        shell: bash
+        env:
+          DEV_ENV_FILE : ${{secrets.SECRET1}}
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v2
+        with:
+         name: DEV_ENV_FILE
+         path: src/.env
