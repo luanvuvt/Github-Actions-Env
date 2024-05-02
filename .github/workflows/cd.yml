@@ -1,9 +1,14 @@
 name: Deployment
+run-name: '[${{ github.event.inputs.environment }}][${{github.ref_name}}] Continuous Deployment'
 
 on:
   push:
     branches:
       - main
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: environment
 
 jobs:
   deployment:
