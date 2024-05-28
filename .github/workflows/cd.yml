@@ -5,7 +5,13 @@ on:
   workflow_dispatch:
     inputs:
       environment:
-        type: environment
+        description: 'Select the environment'
+        required: true
+        type: choice
+        options:
+          - development
+          - staging
+          - production
 
 jobs:
   deployment:
