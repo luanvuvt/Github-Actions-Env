@@ -2,9 +2,6 @@ name: Deployment
 run-name: '[${{ github.event.inputs.environment }}][${{github.ref_name}}] Continuous Deployment'
 
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
     inputs:
       environment:
@@ -16,22 +13,22 @@ jobs:
     strategy:
       matrix:
         environment: [0310, 0210, 9143]
-    environment: production-${{ matrix.environment }}
+    environment: ${{ github.event.inputs.environment }}-${{ matrix.environment }}
     steps:
       - run: echo ${{ vars.SECRET1 }}
       - run: echo ${{ secrets.SECRET1 }}
       - run: echo ${{ vars.MY_ENV1 }}
       - name: print secrets
         run: |
-            mkdir src
-            touch src/.env
-            echo $DEV_ENV_FILE >> src/.env
-            cat src/.env
+            mkdir -p src/${{ github.event.inputs.environment }}-${{ matrix.environment }}
+            touch src/${{ github.event.inputs.environment }}-${{ matrix.environment }}/.env
+            echo $DEV_ENV_FILE >> src/${{ github.event.inputs.environment }}-${{ matrix.environment }}/.env
+            cat src/${{ github.event.inputs.environment }}-${{ matrix.environment }}/.env
         shell: bash
         env:
           DEV_ENV_FILE : ${{secrets.SECRET1}}
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v2
         with:
-         name: DEV_ENV_FILE
-         path: src/.env
+         name: ${{ github.event.inputs.environment }}-${{ matrix.environment }}
+         path: src/${{ github.event.inputs.environment }}-${{ matrix.environment }}/.env
