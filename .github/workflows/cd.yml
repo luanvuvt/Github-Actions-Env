@@ -18,8 +18,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        environment: ["0310", "0210", "9143"]
-    environment: ${{ github.event.inputs.environment }}-${{ matrix.environment }}
+        environment: ["", "-0210", "-9143"]
+    environment: ${{ github.event.inputs.environment }}${{ matrix.environment }}
     steps:
       - run: echo ${{ vars.SECRET1 }}
       - run: echo ${{ secrets.SECRET1 }}
