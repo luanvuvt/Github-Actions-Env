@@ -26,10 +26,10 @@ jobs:
       - run: echo ${{ vars.MY_ENV1 }}
       - name: print secrets
         run: |
-            mkdir -p src/${{ github.event.inputs.environment }}-${{ matrix.environment }}
-            touch src/${{ github.event.inputs.environment }}-${{ matrix.environment }}/.env
-            echo $DEV_ENV_FILE >> src/${{ github.event.inputs.environment }}-${{ matrix.environment }}/.env
-            cat src/${{ github.event.inputs.environment }}-${{ matrix.environment }}/.env
+            mkdir -p src
+            touch src/.env
+            echo $DEV_ENV_FILE >> src/.env
+            cat src/.env
         shell: bash
         env:
           DEV_ENV_FILE : ${{secrets.SECRET1}}
@@ -37,4 +37,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
          name: ${{ github.event.inputs.environment }}-${{ matrix.environment }}
-         path: src/${{ github.event.inputs.environment }}-${{ matrix.environment }}/.env
+         path: src/.env
