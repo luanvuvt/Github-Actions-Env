@@ -23,6 +23,8 @@ jobs:
           # Extract bank codes and convert to a JSON array
           bank_codes=$(echo "$buckets_json" | jq -c 'keys')
 
+          echo "bank codes: $bank_codes"
+
           # Set the bank code array as an output
           echo "::set-output name=codes::$bank_codes"
 
