@@ -52,3 +52,5 @@ jobs:
           s3_bucket=$(echo "$buckets_json" | jq -r ".\"$bank_code\"")
           echo "bucket"
           echo $s3_bucket
+
+          echo ${{secrets.AWS_ASSUME_ROLE_ARN}}
