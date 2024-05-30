@@ -29,6 +29,7 @@ jobs:
   use-keys:
     needs: extract-keys
     runs-on: ubuntu-latest
+    environment: production
 
     strategy:
       matrix:
