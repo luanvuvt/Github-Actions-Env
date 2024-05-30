@@ -8,7 +8,7 @@ jobs:
     environment: production
 
     outputs:
-      keys: ${{ steps.extract_bank_codes.outputs.keys }}
+      keys: ${{ steps.extract_bank_codes.outputs.codes }}
 
     steps:
       - name: Checkout repository
