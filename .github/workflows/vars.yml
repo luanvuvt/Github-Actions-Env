@@ -35,7 +35,7 @@ jobs:
 
     strategy:
       matrix:
-        key: ${{ fromJson(needs.extract-bank-codes.outputs.codes) }}
+        bank_code: ${{ fromJson(needs.extract-bank-codes.outputs.codes) }}
 
     steps:
       - name: Checkout repository
@@ -43,12 +43,12 @@ jobs:
 
       - name: Use extracted keys
         run: |
-          echo "Key: ${{ matrix.key }}"
+          echo "Key: ${{ matrix.bank_code }}"
           
-          json_content='${{vars.AWS_BUCKET_NAME}}'
+          buckets_json='${{vars.AWS_BUCKET_NAME}}'
           
-          # Extract the value for the current key
-          key=${{ matrix.key }}
-          value=$(echo "$json_content" | jq -r ".\"$key\"")
-          echo "value"
-          echo $value
+          # Extract the bucket name for the current bank code
+          bank_code=${{ matrix.bank_code }}
+          s3_bucket=$(echo "$buckets_json" | jq -r ".\"$bank_code\"")
+          echo "bucket"
+          echo $s3_bucket
