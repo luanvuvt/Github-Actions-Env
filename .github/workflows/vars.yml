@@ -18,7 +18,7 @@ jobs:
         id: extract_keys
         run: |
           # Read the JSON file
-          json_content=${{vars.AWS_BUCKET_NAME}}
+          json_content='${{vars.AWS_BUCKET_NAME}}'
           
           # Extract keys and convert to a JSON array
           keys_array=$(echo "$json_content" | jq -c 'keys')
