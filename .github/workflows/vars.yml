@@ -46,6 +46,4 @@ jobs:
           
           # Extract the value for the current key
           key=${{ matrix.key }}
-          value=$(echo "$json_content" | jq -r ".\"$key\"")
-
-          echo $value
+          echo "$json_content" | jq -r ".\"$key\""
