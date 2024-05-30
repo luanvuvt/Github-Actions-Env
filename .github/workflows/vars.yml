@@ -1,0 +1,43 @@
+name: Extract JSON Keys and Use in Matrix
+
+on: [push]
+
+jobs:
+  extract-keys:
+    runs-on: ubuntu-latest
+    environment: production
+
+    outputs:
+      keys: ${{ steps.extract_keys.outputs.keys }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Read and extract JSON keys
+        id: extract_keys
+        run: |
+          # Read the JSON file
+          json_content=${{vars.AWS_BUCKET_NAME}}
+          
+          # Extract keys and convert to a JSON array
+          keys_array=$(echo "$json_content" | jq -c 'keys')
+
+          # Set the keys array as an output
+          echo "::set-output name=keys::$keys_array"
+
+  use-keys:
+    needs: extract-keys
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        key: ${{ fromJson(needs.extract-keys.outputs.keys) }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Use extracted keys
+        run: |
+          echo "Key: ${{ matrix.key }}"
