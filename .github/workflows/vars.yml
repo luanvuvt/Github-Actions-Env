@@ -41,3 +41,11 @@ jobs:
       - name: Use extracted keys
         run: |
           echo "Key: ${{ matrix.key }}"
+          
+          json_content='${{vars.AWS_BUCKET_NAME}}'
+          
+          # Extract the value for the current key
+          key=${{ matrix.key }}
+          value=$(echo "$json_content" | jq -r ".\"$key\"")
+
+          echo $value
